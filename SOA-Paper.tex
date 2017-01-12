@@ -88,7 +88,8 @@
 
 % *** LANGUAGE PACKAGES ***
 \usepackage{german}
-
+\usepackage[UTF8]{inputenc}
+\usepackage[T1]{fontenc} %für Umlautdarstellung
 
 
 
@@ -102,6 +103,7 @@
   % normal IEEE
   \usepackage{cite}
 \fi
+\usepackage{csquotes}
 % cite.sty was written by Donald Arseneau
 % V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
 % \cite{} output to follow that of the IEEE. Loading the cite package will
@@ -154,7 +156,7 @@
 % installed on most LaTeX systems. The latest version and documentation
 % can be obtained at: 
 % http://www.ctan.org/pkg/graphicx
-% Another good source of documentation is "Using Imported Graphics in
+% Another good source of documentation is üsing Imported Graphics in
 % LaTeX2e" by Keith Reckdahl which can be found at:
 % http://www.ctan.org/pkg/epslatex
 %
@@ -412,11 +414,25 @@ The abstract goes here.
 
 
 
-\section{Einf"uhrung}
-Eine kurze Einf"uhrung in die Aufgabenstellung und wie wir sie l"osen wollen bzw. gel"ost haben.
+\section{Einführung}
+IoT wächst. Was hebt IoT Discovery ab? Warum braucht man das?
 
 \section{Frameworks}
-Eine kurze Erkl"arung der Technologien, die wir verwendet haben.
+Eine kurze Erklärung der Technologien, die wir verwendet haben.
+
+\subsection{Simurgh}
+Simurgh ist ein Framework, das versucht, das Design und die Wiederverwendbarkeit von IoT-Anwendungen zu erleichtern und die Verwaltung eines IoT basierten Systems zu vereinfachen. Dies wird  durch eine schichtenbasiert zunehmende Abstraktion von Geräten und ihrer Funktionsweise gegenüber der nutzenden Schicht realisiert. Diese Schichten lassen sich in zwei Gruppen unterteilen, eine \enquote{Things} Schicht und eine \enquote{Platform} Schicht.
+
+Die Platform Schicht übernimmt hierbei die Interaktion mit einem eventuellen Nutzer, diesem werden sog. \enquote{Flows} zur Verfügung gestellt. Durch die Verkettung und Konfiguration dieser \enquote{Flows} kann der Nutzer ein für seine Anforderungen spezifisch erstelltes Programm in Bearbeitung geben, das benötigte Daten von der \enquote{Things} Schicht automatisch anfordert. Um diese Datenanforderung zuverlässig gewährleisten zu können hält sich die Platform Schicht Beschreibungen der ihr bekannten Geräte vor, über welche ein, bzw. mehrere zu der Anfrage passende Geräte gefunden werden. Diese Beschreibungen werden nicht direkt von den Geräten erwartet, sondern von der \enquote{Things} Schicht bereitgestellt. Die Beschreibungen sind hierbei in zwei Teile aufgeteilt, zum einen ein sog. \enquote{Thing Description Document(TDD)} welches eine allgemeine Beschreibung des Geräts und seines Besitzers beinhaltet und zum andren Verweise auf Dokumente, welche die APIs des Geräts beschreiben. Standardmäßig unterstützt das Framework die Beschreibungssprache \enquote{RESTful API Modeling Language(RAML)}, welche weit weniger verbos als z.B. eine entsprechende Beschreibung in der XML-basierten Web Service Description Language ist.
+
+Die \enquote{Things} Schicht setzt sich direkt mit den verschiedenen Geräten auseinander. Die Things Schicht repräsentiert hier eine zentralisierte Verwaltung von Geräten, die Schnittstellen für die \enquote{Platform} Schicht zur Verfügung stellt. Sie verlässt sich hierbei darauf, dass Geräte sich selbstständig einer sog. Domain anschließen und Informationen bereitgestellt werden, aus welchen die Beschreibung für die Platform Schicht generiert werden kann.
+
+Um die Kommunikation mit der Platform Schicht zu vereinfachen, werden die meist hersteller-, protokoll- und/oder sprachspezifischen APIs der einzelnen Geräte von der Things Schicht abstrahiert und in einem einheitlichen Stil ansprechbar gemacht. Hierzu verfügt die Things Schicht über Bibliotheken, die allerdings für Integration eines neuen Gerätetyps erstellt und darauffolgend gewartet werden muss, was die Anwendbarkeit des Frameworks beeinflusst.
+
+\subsection{Discovery-Driven Service Oriented Architecture}
+Der folgende Architekturvorschlag für entdeckungsbasierte Service-Orientierung wurde leider bis jetzt noch mit keinem kürzerem Namen versehen. Deshalb wird er im weiteren Verlauf mit DDSO abgekürzt.
+
+
 
 \section{Bewertung}
 
