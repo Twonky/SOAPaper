@@ -415,7 +415,7 @@ The abstract goes here.
 
 
 \section{Einführung}
-IoT wächst. Was hebt IoT Discovery ab? Warum braucht man das?
+IoT wächst. Was hebt IoT Discovery ab? Warum braucht man das? Definition von \enquote{Gerät}
 
 \section{Frameworks}
 Eine kurze Erklärung der Technologien, die wir verwendet haben.
@@ -431,6 +431,18 @@ Um die Kommunikation mit der Platform Schicht zu vereinfachen, werden die meist 
 
 \subsection{Discovery-Driven Service Oriented Architecture}
 Der folgende Architekturvorschlag für entdeckungsbasierte Service-Orientierung wurde leider bis jetzt noch mit keinem kürzerem Namen versehen. Deshalb wird er im weiteren Verlauf mit DDSO abgekürzt.
+
+DDSP betrachtet Discovery von Geräten ein einem breiteren Spektrum als nur zur direkten Abfrage von Daten. Es versucht, IoT-Geräte in ein Cloud-basiertes Umfeld von Applikationen und Services einzuordnen. Hierzu wird eine Anwendung, die das IoT nutzt, in drei Funktionalitätsbereichen modelliert, die je nach Anwendung verschieden stark verwendet werden. Diese Bereiche sind folgende:
+
+\begin{itemize}
+\item \textbf{Devices} Setzt sich direkt mit zentralisierter Kommunikation mit und  Verwaltung von Geräten auseinander
+\item \textbf{Data} Repräsentiert Datenhaltungssysteme um Ergebnisse der anderen Bereiche transparent speichern und abrufen zu können
+\item \textbf{Application} Repräsentiert verschiedene Applikationen und Services, die sowohl von Endnutzern als auch gegenseitig aufrufbar sind.
+\end{itemize}
+
+In jedem der drei Funktionalitätsbereiche, sowie zwischen allen drei findet außerdem dauerhaft eine automatische Discovery, Integration und Repräsentation von Geräten, Services und Daten statt. Dieser Prozess sorgt dafür, dass 
+
+DDSO soll als eine Erweiterung des \enquote{OpenIoT} Frameworks eingesetzt werden, welches sich bis jetzt nur mit der Discorvery von Geräten auseinandersetzt. Der \enquote{Devices} Bereich der DDSO Architektur soll durch die bis jetzt vorhandenen Funktionalitäten von OpenIoT abgedeckt werden. Die anderen Bereiche des vorgeschlagenen Modells kann OpenIoT allerdings noch nicht bedienen.
 
 
 
