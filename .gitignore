@@ -2,3 +2,6 @@
 *.gz
 *.aux
 *.log
+/*.bbl
+/*.blg
+/*.dvi

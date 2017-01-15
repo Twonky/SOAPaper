@@ -421,6 +421,7 @@ IoT wächst. Was hebt IoT Discovery ab? Warum braucht man das? Definition von \e
 Eine kurze Erklärung der Technologien, die wir verwendet haben.
 
 \subsection{Simurgh}
+
 Simurgh ist ein Framework, das versucht, das Design und die Wiederverwendbarkeit von IoT-Anwendungen zu erleichtern und die Verwaltung eines IoT basierten Systems zu vereinfachen. Dies wird  durch eine schichtenbasiert zunehmende Abstraktion von Geräten und ihrer Funktionsweise gegenüber der nutzenden Schicht realisiert. Diese Schichten lassen sich in zwei Gruppen unterteilen, eine \enquote{Things} Schicht und eine \enquote{Platform} Schicht.
 
 Die Platform Schicht übernimmt hierbei die Interaktion mit einem eventuellen Nutzer, diesem werden sog. \enquote{Flows} zur Verfügung gestellt. Durch die Verkettung und Konfiguration dieser \enquote{Flows} kann der Nutzer ein für seine Anforderungen spezifisch erstelltes Programm in Bearbeitung geben, das benötigte Daten von der \enquote{Things} Schicht automatisch anfordert. Um diese Datenanforderung zuverlässig gewährleisten zu können hält sich die Platform Schicht Beschreibungen der ihr bekannten Geräte vor, über welche ein, bzw. mehrere zu der Anfrage passende Geräte gefunden werden. Diese Beschreibungen werden nicht direkt von den Geräten erwartet, sondern von der \enquote{Things} Schicht bereitgestellt. Die Beschreibungen sind hierbei in zwei Teile aufgeteilt, zum einen ein sog. \enquote{Thing Description Document(TDD)} welches eine allgemeine Beschreibung des Geräts und seines Besitzers beinhaltet und zum andren Verweise auf Dokumente, welche die APIs des Geräts beschreiben. Standardmäßig unterstützt das Framework die Beschreibungssprache \enquote{RESTful API Modeling Language(RAML)}, welche weit weniger verbos als z.B. eine entsprechende Beschreibung in der XML-basierten Web Service Description Language ist.
@@ -444,10 +445,59 @@ In jedem der drei Funktionalitätsbereiche, sowie zwischen allen drei findet au�
 
 DDSO soll als eine Erweiterung des \enquote{OpenIoT} Frameworks eingesetzt werden, welches sich bis jetzt nur mit der Discorvery von Geräten auseinandersetzt. Der \enquote{Devices} Bereich der DDSO Architektur soll durch die bis jetzt vorhandenen Funktionalitäten von OpenIoT abgedeckt werden. Die anderen Bereiche des vorgeschlagenen Modells kann OpenIoT allerdings noch nicht bedienen.
 
+\subsection{Efficient semantic-based IoT service discovery}
 
+Der Ansatz dieses Mechanismus ist die Einführung von semantischen Gateways, die in einer hierarchischen Struktur aufgebaut sind. Im Kern soll es damit ermöglicht werden, in einem dynamischen Kontext die effiziente Suche nach Webservices zu ermöglichen.
+
+Die Hierarchie der semantischen Gateways wird bestimmt durch sogenannte Smart Spaces. Diese Smart Spaces repräsentieren unterschiedlich große räumliche Gebiete, beispielsweise ein Land, eine Region, eine Stadt, eine Straße, ein Haus oder auch nur ein einzelner Raum. Dabei wird jeder Smart Space durch ein semantisches Gateway gekapselt.
+Das semantische Gateway selbst ist eine Softwarekomponente, die Informationen über in ihrem Bereich liegende IoT-Services verwaltet. Zusätzlich nimmt ein Gateway Service-Discovery-Anfrage entgegen und vermittelt die Anfrage an einen Service, der die gesuchten Kriterien erfüllt. Im Inneren besteht ein semantisches Gateway aus mehreren Knoten. Dabei wird zwischen High-Level-Knoten und Low-Level-Knoten unterschieden.
+
+Low-Level-Knoten verwalten die Beschreibungen der Services, die an dem betreffenden Gateway registriert sind. Die High-Level-Knoten wiederum verwalten die Informationen, die benutzt werden um die Verbindung zwischen einer Anfrage und einem Service herzustellen und bilden somit das Kernstück der Funktionalität.
+
+Im speziellen werden die dem Gateway bekannten Services in unterschiedliche Cluster unterteilt. Die Zuteilung zu einem Cluster erfolgt je nach dem Aufgabengebiet, dass ein Service bearbeitet. Somit werden Services gleicher Funktionalität gesammelt. Dies dient dazu, bei einer Anfrage mit möglichst geringen Kosten den richtigen Service vermitteln zu können. 
+
+Die Kosten geben die Autoren als Anzahl der Operationen an, die ausgeführt werden müssen, um innerhalb eines Gateways einen Service zu finden, der die Anfrage zufriedenstellend erfüllt. Durch die Bildung von semantischen Clustern führt dazu, dass das System mit der Zeit optimiert wird und die Kosten einer Service-Discovery-Anfrage somit sinken, je mehr Services dem Gateway bekannt sind.
+
+Wenn die nach der Registrierung eines Service erfolgende Aggregation der Daten abgeschlossen ist, werden diese Daten dem Eltern-Gateway übermittelt, welches sie einerseits speichert, andererseits aber seinem eigenen Eltern-Gateway weiterreicht, bis die neuen Informationen schließlich das Gateway an der Spitze der Hierarchie erreichen. Auf diese Weise wird es ermöglicht, dass jede Hierarchie den Überblick über registrierte Services der tieferliegenden Hierarchieebenen hat und somit eingehende Anfragen optimal vermitteln kann.
+
+\subsection{An Energy-Efficient Service Discovery Protocol}
+
+Problematisch an dem im vorhergehenden Absatz erläuterten Mechanismus ist es, dass die verwendeten Gateways sogenannte Single-Point-of-Failures darstellen, also Punkte, durch kritisch für die Ausführung des Systems sind, respektive bei deren Nicht-Verfügbarkeit das gesamte System lahmgelegt wird. Zusätzlich wird auch darauf hingewiesen, dass bei einer realistischen Anzahl an IoT-Geräten (~Milliarden) die Anzahl der benötigten Gateways unrealistisch stark ansteigen würde. Deshalb verfolgt das in diesem Abschnitt vorgestellte Protokoll einen dezentraleren Ansatz, der die Ausfallsicherheit erhöht.
+
+Da IoT-Geräte eine sehr hohe Diversität aufweisen, fokussiert sich der Ansatz zunächst nur darauf, mit einem Smartphone verschiedenste Sensoren in der erweiterten Umgebung zu finden. Dabei wird bewusst nur ein Ansatz zur Verbindung mit lokalen Services gewählt, da dieser Ansatz erst zu einem späteren Zeitpunkt auf die globale Ebene ausgeweitet werden soll. Bei der Suche eines Smartphones nach einem Service, der bestimmte Sensordaten zur Verfügung stellt, wird bei der Anfrage eine Liste von Kriterien gesendet, die ein Service erfüllen soll.
+
+Die Vermittlung der Anfrage an den passenden Service erfolgt durch eine dreischichtige Architektur. Kernpunkt der Architektur bilden sogenannte Cluster Heads, die Informationen über Services in ihrer direkten Nähe speichern. Diese Cluster Heads werden an zufälligen Punkten erstellt. Wenn ein Cluster Head ausfallen sollte, kann die Anfrage einfach von einem anderen bearbeitet werden, was zu einer erhöhten Verfügbarkeit gegenüber einem Ansatz über Gateways führt.
+Sofern ein Cluster Head eine Anfrage nicht zufriedenstellend an einen Service vermitteln kann, wird die Anfrage stattdessen an die oberste Schicht der Architektur weitergeleitet, den sogenannten Area Router. Der Area Router ist mit allen Cluster Heads eines abgegrenzten räumlichen Bereiches verbunden und speichert Informationen über die dort bekannten Services. Fall ein Cluster Head unter den Service in seiner direkten Umgebung keinen zu einer Anfrage passenden Service findet, kann der Area Router einspringen, da er wesentlich mehr Services kennt. Zusätzlich ist es möglich, das abgedeckte Gebiet zu erweitern, in dem mehrere Area Router zusammengeschaltet werden.
+
+Dadurch, dass die Suche nach passenden Services erst in der unmittelbaren Umgebung erfolgt und nur ausgeweitet wird, falls keine Ergebnisse gefunden werden, wird Energie gespart. Zusätzlich prüft der Mechanismus regelmäßig, ob und wie häufig Cluster Heads angesprochen werden. Wird bei dieser Prüfung festgestellt, dass ein Cluster Head nur sehr selten Anfragen bekommt und aktiv werden muss, so wird er in den Sleep-Modus versetzt, wodurch zusätzlich die Energieeffizienz gesteigert wird.
+
+\subsection{UDDI}
+
+Universal Description, Discovery and Integration (UDDI) ist ein standardisierter Verzeichnisdienst, mit dessen Hilfe Anfragen zwischen Clients und Webservices vermittelt werden sollen. Entwickelt und vorangetrieben wurde UDDI als gemeinsames Projekt von IBM, Microsoft und SAP. Ende 2005 schalteten diese Firmen jedoch ihre UDDI-Technologien ab.
+Laut [Quelle] war UDDI in der Version 1.0 nicht zuverlässig, da die Spezifikation in vielen Punkten zu ungenau formuliert war, um als Industriestandard zu genügen. Wohl auch deshalb fand UDDI anfangs eine wesentlich geringere Akzeptanz als erwartet. Mit der Version 2.0 wurde die Spezifikation im Mai 2003 an vielen Punkten verbessert, so dass diese Version als erste zuverlässige Version angesehen wird.
+Der Prozess der UDDI-Technologie besteht aus drei Schritten:
+Veröffentlichen eines Service (durch den Service-Anbieter)
+Suche eines Clients nach einem Service, welcher bestimmte Kriterien erfüllt
+Verbindung eines Clients zu dem in der UDDI-Registry gefundenen Service
+
+Konkrete Implementationen von UDDI können entweder global oder lokal ausgelegt sein. Das heißt, es ist einerseits möglich, mit einer UDDI-Implementation die registrierten Services über das Internet jedem beliebigen Client zur Verfügung zu stellen (global) oder andererseits, die Services nur innerhalb eines begrenzten Computernetzes anzubieten. Letzteres ist besonders für Unternehmen interessant, da Webservices in deren Kontext oftmals Geschäftslogik enthalten.
+
+Die Informationen über einen an einem UDDI-Dienst registrierte Service werden in drei Kategorien unterteilt. Diese werden angelehnt an das Farbschema von Telefonbüchern als Weiße Seiten, Gelbe Seiten und Grüne Seiten bezeichnet. Die weißen Seiten beinhalten dabei Informationen über den Anbieter und sein Geschäftsfeld. Diese grundlegenden Informationen umfassen beispielsweise Kontaktinformationen wie Adresse, Telefonnummer und den Namen. Zudem wird dem Anbieter eine einzigartige ID zugeordnet, über die er identifiziert werden kann.
+
+Die Gelben Seiten enthalten dann weitergehende Informationen über den Anbieter und beschreiben dabei seine technologischen Kompetenzen, damit eventuell an einem seiner Services interessierte Clients den Anbieter einschätzen können. Dies kann gleichzeitig dazu genutzt werden, um die registrierten Anbieter und Services nach bestimmten Geschäftsfeldern zu durchsuchen.
+
+Als letztes enthalten die Grünen Seiten die eigentlichen technischen Informationen zu einem Service. Diese technischen Informationen umfassen zum einen die vorhandenen Schnittstellen und URL-Adressen, aber auch die Discovery-Informationen, die benötigt werden um die Verbindung zu einem Service herzustellen.
 
 \section{Bewertung}
 
+\subsection{Kriterien}
+
+\begin{itemize}
+\item Scope - wie weit ist ein Framework anwendbar?
+\item Hardwareanforderungen
+\item Automationsgrad
+\item Flexibilität
+\end{itemize}
 
 \section{Ausblick}
 
