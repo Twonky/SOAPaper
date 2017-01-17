@@ -450,23 +450,25 @@ DDSO soll als eine Erweiterung des \enquote{OpenIoT} Frameworks eingesetzt werde
 Der Ansatz dieses Mechanismus ist die Einführung von semantischen Gateways, die in einer hierarchischen Struktur aufgebaut sind. Im Kern soll es damit ermöglicht werden, in einem dynamischen Kontext die effiziente Suche nach Webservices zu ermöglichen.
 
 Die Hierarchie der semantischen Gateways wird bestimmt durch sogenannte Smart Spaces. Diese Smart Spaces repräsentieren unterschiedlich große räumliche Gebiete, beispielsweise ein Land, eine Region, eine Stadt, eine Straße, ein Haus oder auch nur ein einzelner Raum. Dabei wird jeder Smart Space durch ein semantisches Gateway gekapselt.
-Das semantische Gateway selbst ist eine Softwarekomponente, die Informationen über in ihrem Bereich liegende IoT-Services verwaltet. Zusätzlich nimmt ein Gateway Service-Discovery-Anfrage entgegen und vermittelt die Anfrage an einen Service, der die gesuchten Kriterien erfüllt. Im Inneren besteht ein semantisches Gateway aus mehreren Knoten. Dabei wird zwischen High-Level-Knoten und Low-Level-Knoten unterschieden.
+
+Das semantische Gateway selbst ist eine Softwarekomponente, die Informationen über in ihrem Bereich liegende IoT-Services verwaltet. Zusätzlich nimmt ein Gateway Service-Discovery-Anfragen entgegen und vermittelt eine Anfrage an einen Service, der die gesuchten Kriterien erfüllt. Im Inneren besteht ein semantisches Gateway aus mehreren Knoten. Dabei wird zwischen High-Level-Knoten und Low-Level-Knoten unterschieden.
 
 Low-Level-Knoten verwalten die Beschreibungen der Services, die an dem betreffenden Gateway registriert sind. Die High-Level-Knoten wiederum verwalten die Informationen, die benutzt werden um die Verbindung zwischen einer Anfrage und einem Service herzustellen und bilden somit das Kernstück der Funktionalität.
 
-Im speziellen werden die dem Gateway bekannten Services in unterschiedliche Cluster unterteilt. Die Zuteilung zu einem Cluster erfolgt je nach dem Aufgabengebiet, dass ein Service bearbeitet. Somit werden Services gleicher Funktionalität gesammelt. Dies dient dazu, bei einer Anfrage mit möglichst geringen Kosten den richtigen Service vermitteln zu können. 
+Im speziellen werden die dem Gateway bekannten Services in unterschiedliche Cluster unterteilt. Die Zuteilung zu einem Cluster erfolgt je nach dem Aufgabengebiet, das ein Service bearbeitet. Somit werden Services gleicher Funktionalität gesammelt. Dies dient dazu, bei einer Anfrage mit möglichst geringen Kosten den richtigen Service vermitteln zu können. 
 
-Die Kosten geben die Autoren als Anzahl der Operationen an, die ausgeführt werden müssen, um innerhalb eines Gateways einen Service zu finden, der die Anfrage zufriedenstellend erfüllt. Durch die Bildung von semantischen Clustern führt dazu, dass das System mit der Zeit optimiert wird und die Kosten einer Service-Discovery-Anfrage somit sinken, je mehr Services dem Gateway bekannt sind.
+Die Kosten geben die Autoren als Anzahl der Operationen an, die ausgeführt werden müssen, um innerhalb eines Gateways einen Service zu finden, der die Anfrage zufriedenstellend erfüllt. Die Bildung von semantischen Clustern führt dazu, dass das System mit der Zeit optimiert wird und die Kosten einer Service-Discovery-Anfrage somit sinken, je mehr Services dem Gateway bekannt sind.
 
-Wenn die nach der Registrierung eines Service erfolgende Aggregation der Daten abgeschlossen ist, werden diese Daten dem Eltern-Gateway übermittelt, welches sie einerseits speichert, andererseits aber seinem eigenen Eltern-Gateway weiterreicht, bis die neuen Informationen schließlich das Gateway an der Spitze der Hierarchie erreichen. Auf diese Weise wird es ermöglicht, dass jede Hierarchie den Überblick über registrierte Services der tieferliegenden Hierarchieebenen hat und somit eingehende Anfragen optimal vermitteln kann.
+Wenn die nach der Registrierung eines Service erfolgende Aggregation der Daten abgeschlossen ist, werden diese Daten dem Eltern-Gateway übermittelt, welches sie einerseits speichert, andererseits seinem eigenen Eltern-Gateway weiterreicht, bis die neuen Informationen schließlich das Gateway an der Spitze der Hierarchie erreichen. Auf diese Weise wird es ermöglicht, dass jede Hierarchie den Überblick über registrierte Services der tieferliegenden Hierarchieebenen hat und somit eingehende Anfragen optimal vermitteln kann.
 
 \subsection{An Energy-Efficient Service Discovery Protocol}
 
-Problematisch an dem im vorhergehenden Absatz erläuterten Mechanismus ist es, dass die verwendeten Gateways sogenannte Single-Point-of-Failures darstellen, also Punkte, durch kritisch für die Ausführung des Systems sind, respektive bei deren Nicht-Verfügbarkeit das gesamte System lahmgelegt wird. Zusätzlich wird auch darauf hingewiesen, dass bei einer realistischen Anzahl an IoT-Geräten (~Milliarden) die Anzahl der benötigten Gateways unrealistisch stark ansteigen würde. Deshalb verfolgt das in diesem Abschnitt vorgestellte Protokoll einen dezentraleren Ansatz, der die Ausfallsicherheit erhöht.
+Problematisch an dem im vorhergehenden Absatz erläuterten Mechanismus ist, dass die verwendeten Gateways sogenannte Single-Point-of-Failures darstelle, d.h. Punkte, die kritisch für die Ausführung des Systems sind, respektive bei deren Nicht-Verfügbarkeit das gesamte System lahmgelegt wird. Zusätzlich wird auch darauf hingewiesen, dass bei einer realistischen Anzahl an IoT-Geräten (~Milliarden) die Anzahl der benötigten Gateways unrealistisch stark ansteigen würde. Deshalb verfolgt das in diesem Abschnitt vorgestellte Protokoll einen dezentralisierten Ansatz, der die Ausfallsicherheit erhöht.
 
 Da IoT-Geräte eine sehr hohe Diversität aufweisen, fokussiert sich der Ansatz zunächst nur darauf, mit einem Smartphone verschiedenste Sensoren in der erweiterten Umgebung zu finden. Dabei wird bewusst nur ein Ansatz zur Verbindung mit lokalen Services gewählt, da dieser Ansatz erst zu einem späteren Zeitpunkt auf die globale Ebene ausgeweitet werden soll. Bei der Suche eines Smartphones nach einem Service, der bestimmte Sensordaten zur Verfügung stellt, wird bei der Anfrage eine Liste von Kriterien gesendet, die ein Service erfüllen soll.
 
 Die Vermittlung der Anfrage an den passenden Service erfolgt durch eine dreischichtige Architektur. Kernpunkt der Architektur bilden sogenannte Cluster Heads, die Informationen über Services in ihrer direkten Nähe speichern. Diese Cluster Heads werden an zufälligen Punkten erstellt. Wenn ein Cluster Head ausfallen sollte, kann die Anfrage einfach von einem anderen bearbeitet werden, was zu einer erhöhten Verfügbarkeit gegenüber einem Ansatz über Gateways führt.
+
 Sofern ein Cluster Head eine Anfrage nicht zufriedenstellend an einen Service vermitteln kann, wird die Anfrage stattdessen an die oberste Schicht der Architektur weitergeleitet, den sogenannten Area Router. Der Area Router ist mit allen Cluster Heads eines abgegrenzten räumlichen Bereiches verbunden und speichert Informationen über die dort bekannten Services. Fall ein Cluster Head unter den Service in seiner direkten Umgebung keinen zu einer Anfrage passenden Service findet, kann der Area Router einspringen, da er wesentlich mehr Services kennt. Zusätzlich ist es möglich, das abgedeckte Gebiet zu erweitern, in dem mehrere Area Router zusammengeschaltet werden.
 
 Dadurch, dass die Suche nach passenden Services erst in der unmittelbaren Umgebung erfolgt und nur ausgeweitet wird, falls keine Ergebnisse gefunden werden, wird Energie gespart. Zusätzlich prüft der Mechanismus regelmäßig, ob und wie häufig Cluster Heads angesprochen werden. Wird bei dieser Prüfung festgestellt, dass ein Cluster Head nur sehr selten Anfragen bekommt und aktiv werden muss, so wird er in den Sleep-Modus versetzt, wodurch zusätzlich die Energieeffizienz gesteigert wird.
@@ -482,11 +484,11 @@ Verbindung eines Clients zu dem in der UDDI-Registry gefundenen Service
 
 Konkrete Implementationen von UDDI können entweder global oder lokal ausgelegt sein. Das heißt, es ist einerseits möglich, mit einer UDDI-Implementation die registrierten Services über das Internet jedem beliebigen Client zur Verfügung zu stellen (global) oder andererseits, die Services nur innerhalb eines begrenzten Computernetzes anzubieten. Letzteres ist besonders für Unternehmen interessant, da Webservices in deren Kontext oftmals Geschäftslogik enthalten.
 
-Die Informationen über einen an einem UDDI-Dienst registrierte Service werden in drei Kategorien unterteilt. Diese werden angelehnt an das Farbschema von Telefonbüchern als Weiße Seiten, Gelbe Seiten und Grüne Seiten bezeichnet. Die weißen Seiten beinhalten dabei Informationen über den Anbieter und sein Geschäftsfeld. Diese grundlegenden Informationen umfassen beispielsweise Kontaktinformationen wie Adresse, Telefonnummer und den Namen. Zudem wird dem Anbieter eine einzigartige ID zugeordnet, über die er identifiziert werden kann.
+Die Informationen über einen an einem UDDI-Dienst registrierte Service werden in drei Kategorien unterteilt. Diese werden angelehnt an das Farbschema von Telefonbüchern als Weiße, Gelbe und Grüne Seiten bezeichnet. Die weißen Seiten beinhalten dabei Informationen über den Anbieter und sein Geschäftsfeld. Diese grundlegenden Informationen umfassen beispielsweise Kontaktinformationen wie Adresse, Telefonnummer und den Namen. Zudem wird dem Anbieter eine einzigartige ID zugeordnet, über die er identifiziert werden kann.
 
-Die Gelben Seiten enthalten dann weitergehende Informationen über den Anbieter und beschreiben dabei seine technologischen Kompetenzen, damit eventuell an einem seiner Services interessierte Clients den Anbieter einschätzen können. Dies kann gleichzeitig dazu genutzt werden, um die registrierten Anbieter und Services nach bestimmten Geschäftsfeldern zu durchsuchen.
+Die Gelben Seiten enthalten somit weitergehende Informationen über den Anbieter und beschreiben dabei seine technologischen Kompetenzen, damit eventuell an einem seiner Services interessierte Clients den Anbieter einschätzen können. Dies kann gleichzeitig dazu genutzt werden, um die registrierten Anbieter und Services nach bestimmten Geschäftsfeldern zu durchsuchen.
 
-Als letztes enthalten die Grünen Seiten die eigentlichen technischen Informationen zu einem Service. Diese technischen Informationen umfassen zum einen die vorhandenen Schnittstellen und URL-Adressen, aber auch die Discovery-Informationen, die benötigt werden um die Verbindung zu einem Service herzustellen.
+Als letztes enthalten die Grünen Seiten die eigentlichen technischen Informationen zu einem Service. Diese technischen Informationen umfassen zum einen die vorhandenen Schnittstellen und URL-Adressen, sowie auch die Discovery-Informationen, die benötigt werden um die Verbindung zu einem Service herzustellen.
 
 \section{Bewertung}
 
@@ -496,10 +498,39 @@ Als letztes enthalten die Grünen Seiten die eigentlichen technischen Informatio
 \item Scope - wie weit ist ein Framework anwendbar?
 \item Hardwareanforderungen
 \item Automationsgrad
-\item Flexibilität
+\item Ausfallsicherheit
 \end{itemize}
 
+\subsection{Automationsgrad}
+
+In diesem Abschnitt wird der Automationsgrad, d.h. inwiefern menschliche Interaktion mit dem System notwendig bei der Entdeckung von Geräten für die Beantwortung einer Anfrage und dem Einfügen eines neuen Geräts ist. Jedes der vorgestellten Frameworks automatisiert die Auffindung von Geräten und Services, oder Geräten als Services, zu einem gewissen Grade, allerdings unterscheiden sie sich in dem Aufwand, der nötig ist, um diese automatisierten Vorgänge zu starten, sowie deren Daten zu Pflegen, um immer eine optimale Performanz zu garantieren.
+
+Simurgh geht davon aus, dass sich Geräte selbstständig bei einer Domain in der Things Schicht anmelden. Ob dies allerdings ohne weiteres möglich ist, kann in Frage gestellt werden, da sich das IoT vor allem dadurch auszeichnet, dass es eine Menge von heterogenen Geräten von verschiedensten Herstellern vereint. Dies führt dazu, dass eine automatische Registration der verschiedenen Geräten in einem Netzwerk nur durch einen Herstellerübergreifenden Standard ermöglicht werden kann, welcher bis zur Erstellung dieser Arbeit nicht existiert. Schlussfolgern lässt sich hieraus, dass der tatsächliche Aufwand, um ein Gerät in Simurgh zu integrieren Aufwand von menschlicher Seite nach sich zieht, entweder um eine Schnittstellenimplementierung für den neuen Gerätetyp in der Things-Schicht bereitzustellen oder um die benötigten Beschreibungsdokumente zu erstellen, da nicht alle Geräte Simurgh nativ unterstützen werden. Durch die Verpflichtung der Geräte zur Bereitstellung aller benötigten Daten wird eine vollständige Automation der Anfragen in Simurgh erreicht.
+
+DDSO verhält sich ähnlich wie Simurgh, indem es allen potentiellen Aufwand auf das Hinzufügen von Geräten zum Framework verschiebt. Dies führt auch hier dazu, dass Anfragen voll automatisiert abgearbeitet werden können. Beim Hinzufügen verlässt sich DDSO, wie oben erwähnt auf OpenIoT. Das Einfügen eines Geräts in eine OpenIoT-Instanz geschieht entweder, durch den Aufruf einer bestimmten API des Frameworks durch den neuen Sensor, was oben beschriebene Probleme nach sich zieht, wenn auch etwas weniger schwer, da OpenIot sich einer größeren  oder durch manuelle Erstellung und Einreichung der Beschreinbungsdokumente durch den Betreiber der Plattform, was natürlich vermieden werden soll.
+
+Die folgenden zwei Frameworks, \enquote{Efficient semantic-based IoT service discovery (ESB)} und \enquote{An Energy-Efficient Service Discovery Protocol (EEP)} geben keine Auskunft über die Registrierung von neuen Geräten, können deshalb auch nicht in diesem Aspekt der Automatisierung untersucht werden. Das Auffinden von Geräten nachdem sie den Frameworks bekannt sind gestaltet sich jedoch unterschiedlich. In ESB wird die Hierarchie der Gateways von oben nach unten durchgangen, was bei entsprechender Netzwerkgröße die Discovery über mehrere Unteranfragen zwischen den verschiedenen Schichten der Hierarchie erfordert, was den Prozess verlangsamt. In EEP wird eine Anfrage an den nächsten Cluster Head gestellt und wenn dieser sie nicht beantworten kann springt der Area Router ein, was maximal zwei Unterabfragen erlaubt und somit zu besserer Performanz führt. Beide Abfragemechanismen sind allerdings komplett automatisiert.
+
+Hinzufügen von IoT Geräten in ein UUDI-Repository wird mit hoher Wahrscheinlichkeit menschliches Eingreifen erfordern, da heutige Geräte nicht mit der Absicht entwickelt werden, sie über UDDI anzusprechen. Die Entdeckung von Services über UDDI ist wohlbekannt und dokumentiert. Sie verläuft komplett automatisiert. Der Schwachpunkt ist hier, Geräte dazu zu bringen, sich aus eigener Verantwortung dem passenden Repository anzuschließen.
+
+Abschließend lässt sich sagen, dass die alle der vorgestellten Frameworks das automatisierte Auffinden von ihnen bekannten Geräten ohne Eingriffe von Seiten der Nutzer oder Betreiber bewältigen können. Diesen Zustand jedoch herzustellen fällt den meisten ohne Hilfe schwer, einzige mögliche Ausnahme dazu ist DDSO, da sich seine Basis, OpenIoT, einer weiten Verbreitung erfreut und deshalb sein Registrationsmechanismus von mehr Geräten unterstützt wird als andere.
+
+\subsection{Robustheit}
+
+Die Robustheit eines Systems wird dadurch ausgezeichnet, wie es sich verhält, wenn von ihm benötigte Ressourcen ausfallen. Diese Ressourcen können eine Vielzahl an Ausfallfaktoren repräsentieren, im Rahmen dieser Bewertung soll allerdings nur der komplette Ausfall von Servern, die von den Frameworks für die automatische Entdeckung von Geräten verwendet werden, betrachtet werden.
+
+Simurgh und DDSO sind beide auf Deployment in der Cloud ausgelegt, was normalerweise mit sich bringt, dass Anwendungen über mehrere Server in mehreren Rechenzentren verteilt sind. Dies führt dazu, dass im Entwurf solcher Systeme bereits mit dem Ausfall eines oder mehrerer beteiligter Server gerechnet wird. Dies führt dazu, dass im Falle eines Ausfalls zwar einige Geräte nicht gefunden werden, die restlichen allerdings immer noch Anfragen behandeln können, da das Gesamtsystem noch funktioniert. Dies funktioniert natürlich nur solange der Verwaltende Cluster aus mehr als einem Server besteht. DDSO erweitert dies, indem beim Ausfall eines Servers, der Gerätemesswerte zur Verfügung stellt, sowohl andere Geräteserver, als auch Server aus der Data Schicht verwendet werden können. Weiterhin nutzt weder Simurgh noch DDSO zentrale Server zur Verwaltung eines Startverzeichnisses, welches immer anfragen an Server mit genaueren Informationen weiterleitet, sondern alle Server einer einzelnen Schicht sind gleichgestellt und kommunizieren untereinander, somit kommt es nicht darauf an, welcher Server ausfällt, die Auswirkung auf das Gesamtsystem ist immer gleich.
+
+ESB und EEP können zwar auf Cloud-Hardware betrieben werden, sind jedoch nicht explizit darauf ausgelegt. Weiterhin haben beide Schwachpunkte, an welchen ein Ausfall eines einzelnen Servers das gesamte System, bzw. einen erheblichen teil davon mit sich nimmt. Diese Schwachpunkte sind zentrale Verzeichnisserver, Area-Router bei EEP und der höchst gestellte high-level Knoten in ESB. Wenn in EEP ein oder mehrere Area-Router ausfallen, so kann aus anderen Regionen auf keins der verwalteten Cluster Heads zugegriffen werden und die betroffenen Cluster Heads können sich auch nicht mehr untereinander verständigen, was einem Totalausfall des vom ausgefallenen Area-Router Bereichs gleichkommt. Wenn in ESB der höchstgelegene high-level Knoten ausfällt, so ist das Gesamtsystem nicht mehr erreichbar, fällt nur ein niedrigerer Knoten aus, so ist der Einschlag entsprechend geringer.
+
+UDDI ist ein Standard, dessen Robustheit auf der jeweils verwendeten Implementierung basiert. Die Robustheit des Systems muss beim Systementwurf berücksichtigt werden, der Standard gibt jedoch selbst keine Angaben zu Ausfallsicherheit oder zu ergreifenden Maßnahmen.
+
 \section{Ausblick}
+
+
+
+\section{Fazit}
+Kurze Zusammenfassung des Ergebnisses.
 
 
 % An example of a floating figure using the graphicx package.
@@ -595,14 +626,6 @@ Als letztes enthalten die Grünen Seiten die eigentlichen technischen Informatio
 % Note that, LaTeX2e, unlike IEEE journals/conferences, places
 % footnotes above bottom floats. This can be corrected via the
 % \fnbelowfloat command of the stfloats package.
-
-
-
-
-\section{Fazit}
-Kurze Zusammenfassung des Ergebnisses.
-
-
 
 
 % conference papers do not normally have an appendix
