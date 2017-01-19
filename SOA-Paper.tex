@@ -134,12 +134,12 @@
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \ifCLASSINFOpdf
-  % \usepackage[pdftex]{graphicx}
+   \usepackage[pdftex]{graphicx}
   % declare the path(s) where your graphic files are
   % \graphicspath{{../pdf/}{../jpeg/}}
   % and their extensions so you won't have to specify these with
   % every instance of \includegraphics
-  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+  %\DeclareGraphicsExtensions{.pdf,.jpeg,.png}
 \else
   % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
   % will default to the driver specified in the system graphics.cfg if no
@@ -345,12 +345,12 @@
 % use a multiple column layout for up to three different
 % affiliations
 \author{
-\IEEEauthorblockN{Merlin Gernsheimer, B.Sc.}
+\IEEEauthorblockN{Merlin Gernsheimer}
 \IEEEauthorblockA{Hochschule Furtwangen University\\
 Furtwangen, Deutschland\\
-Email: ...}
+Email: merlin.gernsheimer@hs-furtwangen.de}
 \and
-\IEEEauthorblockN{Peter Wursthorn, B.Sc.}
+\IEEEauthorblockN{Peter Wursthorn}
 \IEEEauthorblockA{Hochschule Furtwangen University\\
 Furtwangen, Deutschland\\
 Email: peter.wursthorn@hs-furtwangen.de}}
@@ -415,7 +415,12 @@ The abstract goes here.
 
 
 \section{Einführung}
-IoT wächst. Was hebt IoT Discovery ab? Warum braucht man das? Definition von \enquote{Gerät}
+Das Internet der Dinge (engl. Internet of Things/IoT) nimmt einen immer größeren Stellenwert ein, da es beständig wächst. Neben klassischen internetfähigen Geräten wie Desktop-Computern oder Smartphones sind heutzutage viele Geräte mit dem World Wide Web verbunden, die keine traditionellen Teilnehmer des Internets sind. Manche Geräte, wie Beispiel Sensoren für wissenschaftliche Untersuchungen liefern dabei nur Daten. Andere Geräte hingegen sind über das Internet steuerbar.
+Gerade die Entwicklung des Smart-Home-Konzeptes hat die Anzahl der Geräte letzter Art befeuert. Von der Steckdose bis zur Klimaanlage stehen dem Verbraucher Modelle zur Verfügung, die an das Internet angeschlossen sind und bequem von überall gesteuert werden können.
+
+Die Vielzahl dieser Geräte wirft eine entscheidende Frage auf: Wie können bei so einer Vielzahl an Geräten die richtigen Geräte gefunden werden?
+
+Im weiteren Verlauf dieser Arbeit setzen wir uns zunächst mit diversen Frameworks auseinander, die das Auffinden von IoT-Geräten erleichtern oder komplett übernehmen. Anschließend werden diese Frameworks anhand mehrerer Kriterien untersucht, um herauszufinden, welches sich am besten für die zukünftige Weiterentwicklung der Entdeckung von IoT-Geräten eignet.
 
 \section{Frameworks}
 Eine kurze Erklärung der Technologien, die wir verwendet haben.
@@ -465,6 +470,13 @@ Wenn die nach der Registrierung eines Service erfolgende Aggregation der Daten a
 
 Problematisch an dem im vorhergehenden Absatz erläuterten Mechanismus ist, dass die verwendeten Gateways sogenannte Single-Point-of-Failures darstelle, d.h. Punkte, die kritisch für die Ausführung des Systems sind, respektive bei deren Nicht-Verfügbarkeit das gesamte System lahmgelegt wird. Zusätzlich wird auch darauf hingewiesen, dass bei einer realistischen Anzahl an IoT-Geräten (~Milliarden) die Anzahl der benötigten Gateways unrealistisch stark ansteigen würde. Deshalb verfolgt das in diesem Abschnitt vorgestellte Protokoll einen dezentralisierten Ansatz, der die Ausfallsicherheit erhöht.
 
+\begin{figure}
+\label{EEPBild}
+\includegraphics[scale=0.45]{EEP.png}
+EEP übersicht
+\end{figure}
+
+
 Da IoT-Geräte eine sehr hohe Diversität aufweisen, fokussiert sich der Ansatz zunächst nur darauf, mit einem Smartphone verschiedenste Sensoren in der erweiterten Umgebung zu finden. Dabei wird bewusst nur ein Ansatz zur Verbindung mit lokalen Services gewählt, da dieser Ansatz erst zu einem späteren Zeitpunkt auf die globale Ebene ausgeweitet werden soll. Bei der Suche eines Smartphones nach einem Service, der bestimmte Sensordaten zur Verfügung stellt, wird bei der Anfrage eine Liste von Kriterien gesendet, die ein Service erfüllen soll.
 
 Die Vermittlung der Anfrage an den passenden Service erfolgt durch eine dreischichtige Architektur. Kernpunkt der Architektur bilden sogenannte Cluster Heads, die Informationen über Services in ihrer direkten Nähe speichern. Diese Cluster Heads werden an zufälligen Punkten erstellt. Wenn ein Cluster Head ausfallen sollte, kann die Anfrage einfach von einem anderen bearbeitet werden, was zu einer erhöhten Verfügbarkeit gegenüber einem Ansatz über Gateways führt.
@@ -482,6 +494,12 @@ Veröffentlichen eines Service (durch den Service-Anbieter)
 Suche eines Clients nach einem Service, welcher bestimmte Kriterien erfüllt
 Verbindung eines Clients zu dem in der UDDI-Registry gefundenen Service
 
+\begin{figure}
+\label{UDDIBild}
+\includegraphics[scale=0.45]{UDDI.png}
+UDDI Übersicht
+\end{figure}
+
 Konkrete Implementationen von UDDI können entweder global oder lokal ausgelegt sein. Das heißt, es ist einerseits möglich, mit einer UDDI-Implementation die registrierten Services über das Internet jedem beliebigen Client zur Verfügung zu stellen (global) oder andererseits, die Services nur innerhalb eines begrenzten Computernetzes anzubieten. Letzteres ist besonders für Unternehmen interessant, da Webservices in deren Kontext oftmals Geschäftslogik enthalten.
 
 Die Informationen über einen an einem UDDI-Dienst registrierte Service werden in drei Kategorien unterteilt. Diese werden angelehnt an das Farbschema von Telefonbüchern als Weiße, Gelbe und Grüne Seiten bezeichnet. Die weißen Seiten beinhalten dabei Informationen über den Anbieter und sein Geschäftsfeld. Diese grundlegenden Informationen umfassen beispielsweise Kontaktinformationen wie Adresse, Telefonnummer und den Namen. Zudem wird dem Anbieter eine einzigartige ID zugeordnet, über die er identifiziert werden kann.
@@ -494,12 +512,25 @@ Als letztes enthalten die Grünen Seiten die eigentlichen technischen Informatio
 
 \subsection{Kriterien}
 
-\begin{itemize}
-\item Scope - wie weit ist ein Framework anwendbar?
-\item Hardwareanforderungen
-\item Automationsgrad
-\item Ausfallsicherheit
-\end{itemize}
+\textbf{Scope.} Bei der Bewertung einer Technologie für Service-Discovery spielen die Scopes, in deren Kontext die Service-Discovery stattfindet eine große Rolle. Dabei muss zwischen zwei Arten von Scopes unterschieden werden.
+Der erste Scope, dessen Auswahl entscheidend für die Bewertung der Technologie ist, ist die Reichweite, innerhalb derer Services gesucht werden sollen. Dabei wird unterschieden zwischen einem globalen Scope und einem lokalen Scope. Global bedeutet, dass Services im Kontext des gesamten Internets verwaltet werden, während lokale Ansätze zur Service-Discovery nur ein begrenztes Computernetz variabler Größe verwalten. Rückblickend betrachtet war die Entscheidung, UDDI hauptsächlich als internetweiten (also globalen) Dienst für die Registrierung von Services voranzutreiben einer der größten Fehler hinsichtlich der Entwicklung dieser Technologie. Angetrieben durch den üblichen Hype-Cycle bei der Entwicklung neuer Software-Technologien wurde fälschlicherweise angenommen, dass Anbieter wie Anwender die Nutzung eines zentralen Registrierungsdienstes favorisieren würden.
+
+Wie die Realität gezeigt hat, scheuen sich insbesondere die Anbieter von Webservices, ihre Dienste frei zur Verfügung zu stellen. Gerade Firmen, deren Services oftmals Geschäftslogik enthalten, bevorzugen eine lokale Lösung zur Service-Discovery, bei der ihre Services nur innerhalb des Firmennetzes verfügbar gemacht werden. Diese Entwicklung spiegeln auch die in dieser Arbeit vorgestellten Ansätze wieder, die hauptsächlich lokale Implementierungen fokussieren.
+
+Gerade im Internet der Dinge kommt lokalen Ansätzen eine tragende Rolle zu. Smart-Home verbindet eine große Menge an Geräten mit dem Internet, deren Services deutlich beschränkter sind als die klassischen Webservices. Diese Geräte, die meist über eine REST-Schnittstelle angesprochen werden können, sollen nur im Scope des jeweiligen Hauses gefunden und angesprochen werden können. Der korrekte Scope ist hier von Bedeutung, da eine Entblößung in einem größeren Kontext ein mögliches Sicherheitsproblem darstellt.
+
+Der zweite maßgebliche Scope ist die Art der IoT-Geräte, die durch die Service-Discovery-Technologie verwaltet werden sollen. Wie vorhergehend erwähnt, verzeichnen gerade Smart-Home-Geräte einen starken Anstieg bei der Verbreitung. Dabei werden alle möglichen Haushaltsgeräte an das Internet angeschlossen, um diese zentral steuern zu können. Derartige Geräte umfassen alles angefangen von intelligenten Steckdosen über intelligente Küchengeräte bis hin zu intelligenten Beleuchtungs- und Heizsystemen. Bei dieser Art von Gerät spielt in der Regel die Fernsteuerung eines physischen Gerätes die Hauptrolle, das heißt der Fokus liegt auf dem Senden von Daten. Einen ganz anderen Scope stellen beispielsweise Sensoren für wissenschaftliche Untersuchungen dar, also zum Beispiel Luftdruck oder Temperatursensoren. Aufgrund der hohen Diversität der Geräte konzentrieren sich Technologien für die Service-Discovery meist auf einen bestimmten Typ von Gerät. Da es sich bei den meisten, von IoT-Geräten angebotenen, Services nur um rudimentäre Services ohne detaillierte Beschreibungen wie WSDL-Dokumente handelt, können nur bedingt Aussagen über die jeweiligen Services getroffen werden, sodass es sich anbietet, von vorneherein nur Services mit einer semantischen Ähnlichkeit zu verwalten.
+
+Zusammengefasst lässt sich also sagen, dass hinsichtlich des Scopes bei der Service-Discovery für das Internet der Dinge eine Einschränkung der verwalteten Geräte sowohl in Bezug auf die Größe des verwalteten Bereiches als auch auf die Art des angebotenen Service sinnvoll ist.
+
+\textbf{Hardware.} Die Hardware unterscheidet sich bei Services im Internet der Dinge massiv von der Hardware normaler Webservices. Während letztere in der Regel mit der nötigen Hardware ausgestattet sind, die es braucht um eine breite Geschäftslogik abzuarbeiten, sind IoT-Services mit sehr viel schwächerer Hardware ausgestattet. Zudem kommt die vorrangehend erwähnte Problematik, dass bei dieser Art von Services meist ein beschreibendes Dokument fehlt und somit nicht ohne weiteres Aussagen über die semantische Bedeutung eines Service getroffen werden können.
+
+Grundsätzlich gibt es zwei mögliche Ansätze um Service-Discovery durchzuführen. Einerseits ist es möglich, zentrale Komponenten für die Registrierung von Services zu schaffen, andererseits kann innerhalb eines Netzwerkes per Broadcast nach Services gesucht werden, womit die Suche dezentral funktioniert. Die vorgestellten Ansätze verfolgen ausnahmslos den ersteren, zentralistischen Ansatz. Dies hat mehrere Gründe. Zum einen ist der Ansatz der Identifikation von Services per Broadcast sehr statisch. Er funktioniert in kleinen, lokalen Netzwerken, doch bei einer größeren räumlichen Verteilung kann der Ansatz nicht mitskaliert werden. Zusätzlich ist es nicht möglich, über einen Broadcast gezielt nach einem Service mit bestimmtem Aufgabengebiet zu suchen.
+
+Viel wichtiger ist im Kontext der Hardware aber, das viele solche einen IoT-Service in seiner Ausführung beeinträchtigen können, da Diese hardwareseitig nicht darauf ausgelegt sind. Was in kleinen Netzen kein großes Problem darstellt, wird problematischer je größer das betreffende Computernetz ist. 
+
+Aus diesem Grund sollte für Services von IoT-Geräten ein zentralistischer Ansatz verfolgt werden, wie er auch in [Quelle] verfolgt wird. Neben dem Vorteil, dass eine zentrale Komponente mit ausreichender Rechenleistung die Service-Discovery-Anfragen entgegennimmt, ist es zudem möglich, die Service an dieser Komponente zu registrieren und dabei zusätzliche Informationen zu speichern. Dies ermöglicht es, Informationen über das Aufgabengebiet jedes Service zu speichern und die aggregierten Informationen zu durchsuchen, um Anfragen zielgenau erfüllen zu können. 
+
 
 \subsection{Automationsgrad}
 
@@ -511,7 +542,7 @@ DDSO verhält sich ähnlich wie Simurgh, indem es allen potentiellen Aufwand auf
 
 Die folgenden zwei Frameworks, \enquote{Efficient semantic-based IoT service discovery (ESB)} und \enquote{An Energy-Efficient Service Discovery Protocol (EEP)} geben keine Auskunft über die Registrierung von neuen Geräten, können deshalb auch nicht in diesem Aspekt der Automatisierung untersucht werden. Das Auffinden von Geräten nachdem sie den Frameworks bekannt sind gestaltet sich jedoch unterschiedlich. In ESB wird die Hierarchie der Gateways von oben nach unten durchgangen, was bei entsprechender Netzwerkgröße die Discovery über mehrere Unteranfragen zwischen den verschiedenen Schichten der Hierarchie erfordert, was den Prozess verlangsamt. In EEP wird eine Anfrage an den nächsten Cluster Head gestellt und wenn dieser sie nicht beantworten kann springt der Area Router ein, was maximal zwei Unterabfragen erlaubt und somit zu besserer Performanz führt. Beide Abfragemechanismen sind allerdings komplett automatisiert.
 
-Hinzufügen von IoT Geräten in ein UUDI-Repository wird mit hoher Wahrscheinlichkeit menschliches Eingreifen erfordern, da heutige Geräte nicht mit der Absicht entwickelt werden, sie über UDDI anzusprechen. Die Entdeckung von Services über UDDI ist wohlbekannt und dokumentiert. Sie verläuft komplett automatisiert. Der Schwachpunkt ist hier, Geräte dazu zu bringen, sich aus eigener Verantwortung dem passenden Repository anzuschließen.
+Hinzufügen von IoT Geräten in ein UUDI-Repository wird menschliches Eingreifen erfordern, da heutige Geräte nicht mit der Absicht entwickelt werden, sie über UDDI anzusprechen. Die Entdeckung von Services über UDDI ist wohlbekannt und dokumentiert. Sie verläuft komplett automatisiert. Der Schwachpunkt ist hier, Geräte dazu zu bringen, sich aus eigener Verantwortung dem passenden Repository anzuschließen.
 
 Abschließend lässt sich sagen, dass die alle der vorgestellten Frameworks das automatisierte Auffinden von ihnen bekannten Geräten ohne Eingriffe von Seiten der Nutzer oder Betreiber bewältigen können. Diesen Zustand jedoch herzustellen fällt den meisten ohne Hilfe schwer, einzige mögliche Ausnahme dazu ist DDSO, da sich seine Basis, OpenIoT, einer weiten Verbreitung erfreut und deshalb sein Registrationsmechanismus von mehr Geräten unterstützt wird als andere.
 
@@ -652,11 +683,8 @@ Kurze Zusammenfassung des Ergebnisses.
 % <OR> manually copy in the resultant .bbl file
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
-\begin{thebibliography}{1}
-
-\bibitem{IEEEhowto:kopka}
-
-\end{thebibliography}
+\bibliographystyle{IEEEtran}
+\bibliography{soa.bib}
 
 
 
