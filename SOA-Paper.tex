@@ -423,22 +423,22 @@ Die Vielzahl dieser Geräte wirft eine entscheidende Frage auf: Wie können bei 
 Im weiteren Verlauf dieser Arbeit setzen wir uns zunächst mit diversen Frameworks auseinander, die das Auffinden von IoT-Geräten erleichtern oder komplett übernehmen. Anschließend werden diese Frameworks anhand mehrerer Kriterien untersucht, um herauszufinden, welches sich am besten für die zukünftige Weiterentwicklung der Entdeckung von IoT-Geräten eignet.
 
 \section{Frameworks}
-Eine kurze Erklärung der Technologien, die wir verwendet haben.
+Um die Entdeckung von IoT Geräten von der bisher bekannten Entdeckung von \enquote{normalen} Services abzugrenzen werden folgen verschiedene Frameworks vorgestellt, die sich mit der Entdeckung von Services auseinandersetzen, aufgrund dieser Beschreibungen kann dann im folgenden Kapitel ein Vergleich von IoT-Discovery mit herkömmlicher Service Discovery gezogen werden.
 
 \subsection{Simurgh}
 
-Simurgh ist ein Framework, das versucht, das Design und die Wiederverwendbarkeit von IoT-Anwendungen zu erleichtern und die Verwaltung eines IoT basierten Systems zu vereinfachen. Dies wird  durch eine schichtenbasiert zunehmende Abstraktion von Geräten und ihrer Funktionsweise gegenüber der nutzenden Schicht realisiert. Diese Schichten lassen sich in zwei Gruppen unterteilen, eine \enquote{Things} Schicht und eine \enquote{Platform} Schicht.
+Simurgh ist ein Framework, das versucht, das Design und die Wiederverwendbarkeit von IoT-Anwendungen zu erleichtern und die Verwaltung eines IoT basierten Systems zu vereinfachen. Dies wird  durch eine schichtenbasiert zunehmende Abstraktion von Geräten und ihrer Funktionsweise gegenüber der nutzenden Schicht realisiert. Diese Schichten lassen sich in zwei Gruppen unterteilen, eine \enquote{Things} Schicht und eine \enquote{Platform} Schicht. \cite{Khodadadi}
 
-Die Platform Schicht übernimmt hierbei die Interaktion mit einem eventuellen Nutzer, diesem werden sog. \enquote{Flows} zur Verfügung gestellt. Durch die Verkettung und Konfiguration dieser \enquote{Flows} kann der Nutzer ein für seine Anforderungen spezifisch erstelltes Programm in Bearbeitung geben, das benötigte Daten von der \enquote{Things} Schicht automatisch anfordert. Um diese Datenanforderung zuverlässig gewährleisten zu können hält sich die Platform Schicht Beschreibungen der ihr bekannten Geräte vor, über welche ein, bzw. mehrere zu der Anfrage passende Geräte gefunden werden. Diese Beschreibungen werden nicht direkt von den Geräten erwartet, sondern von der \enquote{Things} Schicht bereitgestellt. Die Beschreibungen sind hierbei in zwei Teile aufgeteilt, zum einen ein sog. \enquote{Thing Description Document(TDD)} welches eine allgemeine Beschreibung des Geräts und seines Besitzers beinhaltet und zum andren Verweise auf Dokumente, welche die APIs des Geräts beschreiben. Standardmäßig unterstützt das Framework die Beschreibungssprache \enquote{RESTful API Modeling Language(RAML)}, welche weit weniger verbos als z.B. eine entsprechende Beschreibung in der XML-basierten Web Service Description Language ist.
+Die Platform Schicht übernimmt hierbei die Interaktion mit einem eventuellen Nutzer, diesem werden sog. \enquote{Flows} zur Verfügung gestellt. Durch die Verkettung und Konfiguration dieser \enquote{Flows} kann der Nutzer ein für seine Anforderungen spezifisch erstelltes Programm in Bearbeitung geben, das benötigte Daten von der \enquote{Things} Schicht automatisch anfordert. Um diese Datenanforderung zuverlässig gewährleisten zu können hält sich die Platform Schicht Beschreibungen der ihr bekannten Geräte vor, über welche ein, bzw. mehrere zu der Anfrage passende Geräte gefunden werden. Diese Beschreibungen werden nicht direkt von den Geräten erwartet, sondern von der \enquote{Things} Schicht bereitgestellt. Die Beschreibungen sind hierbei in zwei Teile aufgeteilt, zum einen ein sog. \enquote{Thing Description Document(TDD)} welches eine allgemeine Beschreibung des Geräts und seines Besitzers beinhaltet und zum andren Verweise auf Dokumente, welche die APIs des Geräts beschreiben. Standardmäßig unterstützt das Framework die Beschreibungssprache \enquote{RESTful API Modeling Language(RAML)}, welche weit weniger verbos als z.B. eine entsprechende Beschreibung in der XML-basierten Web Service Description Language ist. \cite{Khodadadi}
 
-Die \enquote{Things} Schicht setzt sich direkt mit den verschiedenen Geräten auseinander. Die Things Schicht repräsentiert hier eine zentralisierte Verwaltung von Geräten, die Schnittstellen für die \enquote{Platform} Schicht zur Verfügung stellt. Sie verlässt sich hierbei darauf, dass Geräte sich selbstständig einer sog. Domain anschließen und Informationen bereitgestellt werden, aus welchen die Beschreibung für die Platform Schicht generiert werden kann.
+Die \enquote{Things} Schicht setzt sich direkt mit den verschiedenen Geräten auseinander. Die Things Schicht repräsentiert hier eine zentralisierte Verwaltung von Geräten, die Schnittstellen für die \enquote{Platform} Schicht zur Verfügung stellt. Sie verlässt sich hierbei darauf, dass Geräte sich selbstständig einer sog. Domain anschließen und Informationen bereitgestellt werden, aus welchen die Beschreibung für die Platform Schicht generiert werden kann. \cite{Khodadadi}
 
-Um die Kommunikation mit der Platform Schicht zu vereinfachen, werden die meist hersteller-, protokoll- und/oder sprachspezifischen APIs der einzelnen Geräte von der Things Schicht abstrahiert und in einem einheitlichen Stil ansprechbar gemacht. Hierzu verfügt die Things Schicht über Bibliotheken, die allerdings für Integration eines neuen Gerätetyps erstellt und darauffolgend gewartet werden muss, was die Anwendbarkeit des Frameworks beeinflusst.
+Um die Kommunikation mit der Platform Schicht zu vereinfachen, werden die meist hersteller-, protokoll- und/oder sprachspezifischen APIs der einzelnen Geräte von der Things Schicht abstrahiert und in einem einheitlichen Stil ansprechbar gemacht. Hierzu verfügt die Things Schicht über Bibliotheken, die allerdings für Integration eines neuen Gerätetyps erstellt und darauffolgend gewartet werden muss, was die Anwendbarkeit des Frameworks beeinflusst. \cite{Khodadadi}
 
 \subsection{Discovery-Driven Service Oriented Architecture}
 Der folgende Architekturvorschlag für entdeckungsbasierte Service-Orientierung wurde leider bis jetzt noch mit keinem kürzerem Namen versehen. Deshalb wird er im weiteren Verlauf mit DDSO abgekürzt.
 
-DDSP betrachtet Discovery von Geräten ein einem breiteren Spektrum als nur zur direkten Abfrage von Daten. Es versucht, IoT-Geräte in ein Cloud-basiertes Umfeld von Applikationen und Services einzuordnen. Hierzu wird eine Anwendung, die das IoT nutzt, in drei Funktionalitätsbereichen modelliert, die je nach Anwendung verschieden stark verwendet werden. Diese Bereiche sind folgende:
+DDSP betrachtet Discovery von Geräten ein einem breiteren Spektrum als nur zur direkten Abfrage von Daten. Es versucht, IoT-Geräte in ein Cloud-basiertes Umfeld von Applikationen und Services einzuordnen. Hierzu wird eine Anwendung, die das IoT nutzt, in drei Funktionalitätsbereichen modelliert, die je nach Anwendung verschieden stark verwendet werden. \cite{Georgakopoulos} Diese Bereiche sind folgende:
 
 \begin{itemize}
 \item \textbf{Devices} Setzt sich direkt mit zentralisierter Kommunikation mit und  Verwaltung von Geräten auseinander
@@ -448,7 +448,7 @@ DDSP betrachtet Discovery von Geräten ein einem breiteren Spektrum als nur zur 
 
 In jedem der drei Funktionalitätsbereiche, sowie zwischen allen drei findet außerdem dauerhaft eine automatische Discovery, Integration und Repräsentation von Geräten, Services und Daten statt. Dieser Prozess sorgt dafür, dass 
 
-DDSO soll als eine Erweiterung des \enquote{OpenIoT} Frameworks eingesetzt werden, welches sich bis jetzt nur mit der Discorvery von Geräten auseinandersetzt. Der \enquote{Devices} Bereich der DDSO Architektur soll durch die bis jetzt vorhandenen Funktionalitäten von OpenIoT abgedeckt werden. Die anderen Bereiche des vorgeschlagenen Modells kann OpenIoT allerdings noch nicht bedienen.
+DDSO soll als eine Erweiterung des \enquote{OpenIoT} Frameworks eingesetzt werden, welches sich bis jetzt nur mit der Discorvery von Geräten auseinandersetzt. Der \enquote{Devices} Bereich der DDSO Architektur soll durch die bis jetzt vorhandenen Funktionalitäten von OpenIoT abgedeckt werden. Die anderen Bereiche des vorgeschlagenen Modells kann OpenIoT allerdings noch nicht bedienen. \cite{Georgakopoulos}
 
 \subsection{Efficient semantic-based IoT service discovery}
 
@@ -468,14 +468,16 @@ Wenn die nach der Registrierung eines Service erfolgende Aggregation der Daten a
 
 \subsection{An Energy-Efficient Service Discovery Protocol}
 
-Problematisch an dem im vorhergehenden Absatz erläuterten Mechanismus ist, dass die verwendeten Gateways sogenannte Single-Point-of-Failures darstelle, d.h. Punkte, die kritisch für die Ausführung des Systems sind, respektive bei deren Nicht-Verfügbarkeit das gesamte System lahmgelegt wird. Zusätzlich wird auch darauf hingewiesen, dass bei einer realistischen Anzahl an IoT-Geräten (~Milliarden) die Anzahl der benötigten Gateways unrealistisch stark ansteigen würde. Deshalb verfolgt das in diesem Abschnitt vorgestellte Protokoll einen dezentralisierten Ansatz, der die Ausfallsicherheit erhöht.
+Problematisch an dem im vorhergehenden Absatz erläuterten Mechanismus ist, dass die verwendeten Gateways sogenannte Single-Point-of-Failures darstellen, d.h. Punkte, die kritisch für die Ausführung des Systems sind, respektive bei deren Nicht-Verfügbarkeit das gesamte System lahmgelegt wird. Zusätzlich wird auch darauf hingewiesen, dass bei einer realistischen Anzahl an IoT-Geräten (~Milliarden) die Anzahl der benötigten Gateways unrealistisch stark ansteigen würde. Deshalb verfolgt das in diesem Abschnitt vorgestellte Protokoll einen dezentralisierten Ansatz, der die Ausfallsicherheit erhöht.
 
 \begin{figure}
 \label{EEPBild}
 \includegraphics[scale=0.45]{EEP.png}
-EEP übersicht
+\caption{EEP Übersicht}
+\begin{center}
+Quelle: \cite{Helal}
+\end{center}
 \end{figure}
-
 
 Da IoT-Geräte eine sehr hohe Diversität aufweisen, fokussiert sich der Ansatz zunächst nur darauf, mit einem Smartphone verschiedenste Sensoren in der erweiterten Umgebung zu finden. Dabei wird bewusst nur ein Ansatz zur Verbindung mit lokalen Services gewählt, da dieser Ansatz erst zu einem späteren Zeitpunkt auf die globale Ebene ausgeweitet werden soll. Bei der Suche eines Smartphones nach einem Service, der bestimmte Sensordaten zur Verfügung stellt, wird bei der Anfrage eine Liste von Kriterien gesendet, die ein Service erfüllen soll.
 
@@ -510,9 +512,9 @@ Als letztes enthalten die Grünen Seiten die eigentlichen technischen Informatio
 
 \section{Bewertung}
 
-\subsection{Kriterien}
+\subsection{Scope}
 
-\textbf{Scope.} Bei der Bewertung einer Technologie für Service-Discovery spielen die Scopes, in deren Kontext die Service-Discovery stattfindet eine große Rolle. Dabei muss zwischen zwei Arten von Scopes unterschieden werden.
+Bei der Bewertung einer Technologie für Service-Discovery spielen die Scopes, in deren Kontext die Service-Discovery stattfindet eine große Rolle. Dabei muss zwischen zwei Arten von Scopes unterschieden werden.
 Der erste Scope, dessen Auswahl entscheidend für die Bewertung der Technologie ist, ist die Reichweite, innerhalb derer Services gesucht werden sollen. Dabei wird unterschieden zwischen einem globalen Scope und einem lokalen Scope. Global bedeutet, dass Services im Kontext des gesamten Internets verwaltet werden, während lokale Ansätze zur Service-Discovery nur ein begrenztes Computernetz variabler Größe verwalten. Rückblickend betrachtet war die Entscheidung, UDDI hauptsächlich als internetweiten (also globalen) Dienst für die Registrierung von Services voranzutreiben einer der größten Fehler hinsichtlich der Entwicklung dieser Technologie. Angetrieben durch den üblichen Hype-Cycle bei der Entwicklung neuer Software-Technologien wurde fälschlicherweise angenommen, dass Anbieter wie Anwender die Nutzung eines zentralen Registrierungsdienstes favorisieren würden.
 
 Wie die Realität gezeigt hat, scheuen sich insbesondere die Anbieter von Webservices, ihre Dienste frei zur Verfügung zu stellen. Gerade Firmen, deren Services oftmals Geschäftslogik enthalten, bevorzugen eine lokale Lösung zur Service-Discovery, bei der ihre Services nur innerhalb des Firmennetzes verfügbar gemacht werden. Diese Entwicklung spiegeln auch die in dieser Arbeit vorgestellten Ansätze wieder, die hauptsächlich lokale Implementierungen fokussieren.
@@ -523,7 +525,9 @@ Der zweite maßgebliche Scope ist die Art der IoT-Geräte, die durch die Service
 
 Zusammengefasst lässt sich also sagen, dass hinsichtlich des Scopes bei der Service-Discovery für das Internet der Dinge eine Einschränkung der verwalteten Geräte sowohl in Bezug auf die Größe des verwalteten Bereiches als auch auf die Art des angebotenen Service sinnvoll ist.
 
-\textbf{Hardware.} Die Hardware unterscheidet sich bei Services im Internet der Dinge massiv von der Hardware normaler Webservices. Während letztere in der Regel mit der nötigen Hardware ausgestattet sind, die es braucht um eine breite Geschäftslogik abzuarbeiten, sind IoT-Services mit sehr viel schwächerer Hardware ausgestattet. Zudem kommt die vorrangehend erwähnte Problematik, dass bei dieser Art von Services meist ein beschreibendes Dokument fehlt und somit nicht ohne weiteres Aussagen über die semantische Bedeutung eines Service getroffen werden können.
+\subsection{Hardware}
+
+Die Hardware unterscheidet sich bei Services im Internet der Dinge massiv von der Hardware normaler Webservices. Während letztere in der Regel mit der nötigen Hardware ausgestattet sind, die es braucht um eine breite Geschäftslogik abzuarbeiten, sind IoT-Services mit sehr viel schwächerer Hardware ausgestattet. Zudem kommt die vorrangehend erwähnte Problematik, dass bei dieser Art von Services meist ein beschreibendes Dokument fehlt und somit nicht ohne weiteres Aussagen über die semantische Bedeutung eines Service getroffen werden können.
 
 Grundsätzlich gibt es zwei mögliche Ansätze um Service-Discovery durchzuführen. Einerseits ist es möglich, zentrale Komponenten für die Registrierung von Services zu schaffen, andererseits kann innerhalb eines Netzwerkes per Broadcast nach Services gesucht werden, womit die Suche dezentral funktioniert. Die vorgestellten Ansätze verfolgen ausnahmslos den ersteren, zentralistischen Ansatz. Dies hat mehrere Gründe. Zum einen ist der Ansatz der Identifikation von Services per Broadcast sehr statisch. Er funktioniert in kleinen, lokalen Netzwerken, doch bei einer größeren räumlichen Verteilung kann der Ansatz nicht mitskaliert werden. Zusätzlich ist es nicht möglich, über einen Broadcast gezielt nach einem Service mit bestimmtem Aufgabengebiet zu suchen.
 
@@ -683,8 +687,8 @@ Kurze Zusammenfassung des Ergebnisses.
 % <OR> manually copy in the resultant .bbl file
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
-\bibliographystyle{IEEEtran}
-\bibliography{soa.bib}
+\bibliographystyle{ieeetran}
+\bibliography{soa}
 
 
 
