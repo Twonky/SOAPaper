@@ -394,7 +394,7 @@ Email: peter.wursthorn@hs-furtwangen.de}}
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
 \begin{abstract}
-The abstract goes here.
+Das Internet der Dinge wächst beständig. Die Vielzahl der Geräte macht die Situation zunehmend unübersichtlich. Um der exponentiell zunehmender Anzahl an Geräten Herr zu werden, gibt es mehrere Vorschläge, die Nutzung von IoT-Geräten über eine automatisierte Discovery-Plattform abzuwickeln, um Geräte einfacher verwalten zu können. In diesem Paper werden einige dieser Vorschläge vorgestellt und ausgewertet, wie die Zukunft von IoT-Discovery gestaltet werden kann.
 \end{abstract}
 
 % no keywords
@@ -470,7 +470,11 @@ Wenn die nach der Registrierung eines Service erfolgende Aggregation der Daten a
 
 Problematisch an dem im vorhergehenden Absatz erläuterten Mechanismus ist, dass die verwendeten Gateways sogenannte Single-Point-of-Failures darstellen, d.h. Punkte, die kritisch für die Ausführung des Systems sind, respektive bei deren Nicht-Verfügbarkeit das gesamte System lahmgelegt wird. Zusätzlich wird auch darauf hingewiesen, dass bei einer realistischen Anzahl an IoT-Geräten (~Milliarden) die Anzahl der benötigten Gateways unrealistisch stark ansteigen würde. Deshalb verfolgt das in diesem Abschnitt vorgestellte Protokoll einen dezentralisierten Ansatz, der die Ausfallsicherheit erhöht. (vgl. \cite{energy-efficient})
 
-\begin{figure}
+Da IoT-Geräte eine sehr hohe Diversität aufweisen, fokussiert sich der Ansatz zunächst nur darauf, mit einem Smartphone verschiedenste Sensoren in der erweiterten Umgebung zu finden. Dabei wird bewusst nur ein Ansatz zur Verbindung mit lokalen Services gewählt, da dieser Ansatz erst zu einem späteren Zeitpunkt auf die globale Ebene ausgeweitet werden soll. Bei der Suche eines Smartphones nach einem Service, der bestimmte Sensordaten zur Verfügung stellt, wird bei der Anfrage eine Liste von Kriterien gesendet, die ein Service erfüllen soll. (vgl. \cite{energy-efficient})
+
+Die Vermittlung der Anfrage an den passenden Service erfolgt durch eine dreischichtige Architektur. Kernpunkt der Architektur bilden sogenannte Cluster Heads, die Informationen über Services in ihrer direkten Nähe speichern. Diese Cluster Heads werden an zufälligen Punkten erstellt. Wenn ein Cluster Head ausfallen sollte, kann die Anfrage einfach von einem anderen bearbeitet werden, was zu einer erhöhten Verfügbarkeit gegenüber einem Ansatz über Gateways führt. (vgl. \cite{energy-efficient})
+
+\begin{figure}[h]
 \centering
 \includegraphics[scale=0.45]{EEP.png}
 \caption{EEP Übersicht}
@@ -478,11 +482,7 @@ Problematisch an dem im vorhergehenden Absatz erläuterten Mechanismus ist, dass
 Quelle: \cite{energy-efficient}
 \end{figure}
 
-Da IoT-Geräte eine sehr hohe Diversität aufweisen, fokussiert sich der Ansatz zunächst nur darauf, mit einem Smartphone verschiedenste Sensoren in der erweiterten Umgebung zu finden. Dabei wird bewusst nur ein Ansatz zur Verbindung mit lokalen Services gewählt, da dieser Ansatz erst zu einem späteren Zeitpunkt auf die globale Ebene ausgeweitet werden soll. Bei der Suche eines Smartphones nach einem Service, der bestimmte Sensordaten zur Verfügung stellt, wird bei der Anfrage eine Liste von Kriterien gesendet, die ein Service erfüllen soll. (vgl. \cite{energy-efficient})
-
-Die Vermittlung der Anfrage an den passenden Service erfolgt durch eine dreischichtige Architektur. Kernpunkt der Architektur bilden sogenannte Cluster Heads, die Informationen über Services in ihrer direkten Nähe speichern. Diese Cluster Heads werden an zufälligen Punkten erstellt. Wenn ein Cluster Head ausfallen sollte, kann die Anfrage einfach von einem anderen bearbeitet werden, was zu einer erhöhten Verfügbarkeit gegenüber einem Ansatz über Gateways führt. (vgl. \cite{energy-efficient})
-
-Sofern ein Cluster Head eine Anfrage nicht zufriedenstellend an einen Service vermitteln kann, wird die Anfrage stattdessen an die oberste Schicht der Architektur weitergeleitet, den sogenannten Area Router. Der Area Router ist mit allen Cluster Heads eines abgegrenzten räumlichen Bereiches verbunden und speichert Informationen über die dort bekannten Services. Fall ein Cluster Head unter den Service in seiner direkten Umgebung keinen zu einer Anfrage passenden Service findet, kann der Area Router einspringen, da er wesentlich mehr Services kennt. Zusätzlich ist es möglich, das abgedeckte Gebiet zu erweitern, in dem mehrere Area Router zusammengeschaltet werden. (vgl. \cite{energy-efficient})
+Wie in Abbildung \ref{EEPBild} zu sehen wird, wenn ein Cluster Head eine Anfrage nicht zufriedenstellend an einen Service vermitteln kann, die Anfrage stattdessen an die oberste Schicht der Architektur weitergeleitet, den Area Router. Der Area Router ist mit allen Cluster Heads eines abgegrenzten räumlichen Bereiches verbunden und speichert Informationen über die dort bekannten Services. Fall ein Cluster Head unter den Service in seiner direkten Umgebung keinen zu einer Anfrage passenden Service findet, kann der Area Router einspringen, da er wesentlich mehr Services kennt. Zusätzlich ist es möglich, das abgedeckte Gebiet zu erweitern, in dem mehrere Area Router zusammengeschaltet werden. (vgl. \cite{energy-efficient})
 
 Dadurch, dass die Suche nach passenden Services erst in der unmittelbaren Umgebung erfolgt und nur ausgeweitet wird, falls keine Ergebnisse gefunden werden, wird Energie gespart. Zusätzlich prüft der Mechanismus regelmäßig, ob und wie häufig Cluster Heads angesprochen werden. Wird bei dieser Prüfung festgestellt, dass ein Cluster Head nur sehr selten Anfragen bekommt und aktiv werden muss, so wird er in den Sleep-Modus versetzt, wodurch zusätzlich die Energieeffizienz gesteigert wird. (vgl. \cite{energy-efficient})
 
@@ -561,15 +561,15 @@ Hieraus folgt, dass Robustheit im Bereich der Service-Discorvery im IoT noch nic
 
 \section{Ausblick}
 
-Das Thema der Service-Discovery im Internet der Dinge wird in den nächsten Jahren an Brisanz gewinnen. Vorsichtige Prognosen gehen davon aus, dass bis 2020 knapp 20 Milliarden Geräte mit dem Internet verbunden sind [Quelle 1], während andere Schätzungen gar von 200 Milliarden ausgehen [Quelle 2]. In jedem Fall steigt die Anzahl der teilnehmenden Geräte massiv, wodurch die automatische Vermittlung zwischen verschiedenen serviceorientierten Komponenten auch weiterhin ein wichtiges Thema bleibt.
+Das Thema der Service-Discovery im Internet der Dinge wird in den nächsten Jahren an Brisanz gewinnen. Vorsichtige Prognosen gehen davon aus, dass bis 2020 knapp 20 Milliarden Geräte mit dem Internet verbunden sind \cite{IoT2}, während andere Schätzungen gar von 200 Milliarden ausgehen \cite{IoT1}. In jedem Fall steigt die Anzahl der teilnehmenden Geräte massiv, wodurch die automatische Vermittlung zwischen verschiedenen serviceorientierten Komponenten auch weiterhin ein wichtiges Thema bleibt.
 
 Einen der wichtigsten Punkte für zukünftige Arbeiten stellt die Erarbeitung eines allgemein verwendbaren Frameworks für die Service Discovery dar. Die bislang vorgestellten Ansätze sind zumeist auf bestimmte Komponenten zugeschnitten, beispielsweise wissenschaftliche Sensoren. Wegen der hohen Diversität der unterschiedlichen Geräte sollte deshalb als nächster Schritt ein Framework für die allgemein Integration unterschiedlicher Komponenten konzipiert werden.
 
-
-
 \section{Fazit}
-Kurze Zusammenfassung des Ergebnisses.
 
+Im Verlauf dieser Arbeit hat sich herausgestellt, dass es im Bereich der Service-Discovery im Internet of Things keinen einheitlichen Ansatz gibt. An der Vielzahl der existierenden Vorschläge zur Umsetzung dieser Discovery ist jedoch abzuleiten, dass eine Nachfrage, solche Systeme umzusetzen, zumindest in der Forschung wahrgenommen wird. Die Situation in der Praxis ist aufgrund fehlender Standardisierung und praktikabler öffentlicher Vorschläge aus der Forschung jedoch unübersichtlich.
+
+Es kann allerdings eine Entwicklung zu einer gemeingültigen Umsetzung von Discovery im IoT erkannt werden, die mit der wachsenden Anzahl an Geräten und damit wachsenden Vielfalt an Hardware im Internet der Dinge nur verstärkt werden wird, vor allem im Aspekt der Automatisierung der Registrierung von Geräten an einem solchen Service wird noch gefeilt werden.
 
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
