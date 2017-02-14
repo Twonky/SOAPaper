@@ -452,23 +452,23 @@ DDSO soll als eine Erweiterung des \enquote{OpenIoT} Frameworks eingesetzt werde
 
 \subsection{Efficient semantic-based IoT service discovery}
 
-Der Ansatz dieses Mechanismus ist die Einführung von semantischen Gateways, die in einer hierarchischen Struktur aufgebaut sind. Im Kern soll es damit ermöglicht werden, in einem dynamischen Kontext die effiziente Suche nach Webservices zu ermöglichen.
+Der Ansatz dieses Mechanismus ist die Einführung von semantischen Gateways, die in einer hierarchischen Struktur aufgebaut sind. Im Kern soll es damit ermöglicht werden, in einem dynamischen Kontext die effiziente Suche nach Webservices zu ermöglichen. (vgl. \cite{efficientSemantic})
 
-Die Hierarchie der semantischen Gateways wird bestimmt durch sogenannte Smart Spaces. Diese Smart Spaces repräsentieren unterschiedlich große räumliche Gebiete, beispielsweise ein Land, eine Region, eine Stadt, eine Straße, ein Haus oder auch nur ein einzelner Raum. Dabei wird jeder Smart Space durch ein semantisches Gateway gekapselt.
+Die Hierarchie der semantischen Gateways wird bestimmt durch sogenannte Smart Spaces. Diese Smart Spaces repräsentieren unterschiedlich große räumliche Gebiete, beispielsweise ein Land, eine Region, eine Stadt, eine Straße, ein Haus oder auch nur ein einzelner Raum. Dabei wird jeder Smart Space durch ein semantisches Gateway gekapselt. (vgl. \cite{efficientSemantic})
 
-Das semantische Gateway selbst ist eine Softwarekomponente, die Informationen über in ihrem Bereich liegende IoT-Services verwaltet. Zusätzlich nimmt ein Gateway Service-Discovery-Anfragen entgegen und vermittelt eine Anfrage an einen Service, der die gesuchten Kriterien erfüllt. Im Inneren besteht ein semantisches Gateway aus mehreren Knoten. Dabei wird zwischen High-Level-Knoten und Low-Level-Knoten unterschieden.
+Das semantische Gateway selbst ist eine Softwarekomponente, die Informationen über in ihrem Bereich liegende IoT-Services verwaltet. Zusätzlich nimmt ein Gateway Service-Discovery-Anfragen entgegen und vermittelt eine Anfrage an einen Service, der die gesuchten Kriterien erfüllt. Im Inneren besteht ein semantisches Gateway aus mehreren Knoten. Dabei wird zwischen High-Level-Knoten und Low-Level-Knoten unterschieden. (vgl. \cite{efficientSemantic})
 
-Low-Level-Knoten verwalten die Beschreibungen der Services, die an dem betreffenden Gateway registriert sind. Die High-Level-Knoten wiederum verwalten die Informationen, die benutzt werden um die Verbindung zwischen einer Anfrage und einem Service herzustellen und bilden somit das Kernstück der Funktionalität.
+Low-Level-Knoten verwalten die Beschreibungen der Services, die an dem betreffenden Gateway registriert sind. Die High-Level-Knoten wiederum verwalten die Informationen, die benutzt werden um die Verbindung zwischen einer Anfrage und einem Service herzustellen und bilden somit das Kernstück der Funktionalität. (vgl. \cite{efficientSemantic})
 
-Im speziellen werden die dem Gateway bekannten Services in unterschiedliche Cluster unterteilt. Die Zuteilung zu einem Cluster erfolgt je nach dem Aufgabengebiet, das ein Service bearbeitet. Somit werden Services gleicher Funktionalität gesammelt. Dies dient dazu, bei einer Anfrage mit möglichst geringen Kosten den richtigen Service vermitteln zu können. 
+Im speziellen werden die dem Gateway bekannten Services in unterschiedliche Cluster unterteilt. Die Zuteilung zu einem Cluster erfolgt je nach dem Aufgabengebiet, das ein Service bearbeitet. Somit werden Services gleicher Funktionalität gesammelt. Dies dient dazu, bei einer Anfrage mit möglichst geringen Kosten den richtigen Service vermitteln zu können. (vgl. \cite{efficientSemantic})
 
-Die Kosten geben die Autoren als Anzahl der Operationen an, die ausgeführt werden müssen, um innerhalb eines Gateways einen Service zu finden, der die Anfrage zufriedenstellend erfüllt. Die Bildung von semantischen Clustern führt dazu, dass das System mit der Zeit optimiert wird und die Kosten einer Service-Discovery-Anfrage somit sinken, je mehr Services dem Gateway bekannt sind.
+Die Kosten geben die Autoren als Anzahl der Operationen an, die ausgeführt werden müssen, um innerhalb eines Gateways einen Service zu finden, der die Anfrage zufriedenstellend erfüllt. Die Bildung von semantischen Clustern führt dazu, dass das System mit der Zeit optimiert wird und die Kosten einer Service-Discovery-Anfrage somit sinken, je mehr Services dem Gateway bekannt sind. (vgl. \cite{efficientSemantic})
 
-Wenn die nach der Registrierung eines Service erfolgende Aggregation der Daten abgeschlossen ist, werden diese Daten dem Eltern-Gateway übermittelt, welches sie einerseits speichert, andererseits seinem eigenen Eltern-Gateway weiterreicht, bis die neuen Informationen schließlich das Gateway an der Spitze der Hierarchie erreichen. Auf diese Weise wird es ermöglicht, dass jede Hierarchie den Überblick über registrierte Services der tieferliegenden Hierarchieebenen hat und somit eingehende Anfragen optimal vermitteln kann.
+Wenn die nach der Registrierung eines Service erfolgende Aggregation der Daten abgeschlossen ist, werden diese Daten dem Eltern-Gateway übermittelt, welches sie einerseits speichert, andererseits seinem eigenen Eltern-Gateway weiterreicht, bis die neuen Informationen schließlich das Gateway an der Spitze der Hierarchie erreichen. Auf diese Weise wird es ermöglicht, dass jede Hierarchie den Überblick über registrierte Services der tieferliegenden Hierarchieebenen hat und somit eingehende Anfragen optimal vermitteln kann. (vgl. \cite{efficientSemantic})
 
 \subsection{An Energy-Efficient Service Discovery Protocol}
 
-Problematisch an dem im vorhergehenden Absatz erläuterten Mechanismus ist, dass die verwendeten Gateways sogenannte Single-Point-of-Failures darstellen, d.h. Punkte, die kritisch für die Ausführung des Systems sind, respektive bei deren Nicht-Verfügbarkeit das gesamte System lahmgelegt wird. Zusätzlich wird auch darauf hingewiesen, dass bei einer realistischen Anzahl an IoT-Geräten (~Milliarden) die Anzahl der benötigten Gateways unrealistisch stark ansteigen würde. Deshalb verfolgt das in diesem Abschnitt vorgestellte Protokoll einen dezentralisierten Ansatz, der die Ausfallsicherheit erhöht.
+Problematisch an dem im vorhergehenden Absatz erläuterten Mechanismus ist, dass die verwendeten Gateways sogenannte Single-Point-of-Failures darstellen, d.h. Punkte, die kritisch für die Ausführung des Systems sind, respektive bei deren Nicht-Verfügbarkeit das gesamte System lahmgelegt wird. Zusätzlich wird auch darauf hingewiesen, dass bei einer realistischen Anzahl an IoT-Geräten (~Milliarden) die Anzahl der benötigten Gateways unrealistisch stark ansteigen würde. Deshalb verfolgt das in diesem Abschnitt vorgestellte Protokoll einen dezentralisierten Ansatz, der die Ausfallsicherheit erhöht. (vgl. \cite{energy-efficient})
 
 \begin{figure}
 \centering
@@ -478,18 +478,19 @@ Problematisch an dem im vorhergehenden Absatz erläuterten Mechanismus ist, dass
 Quelle: \cite{energy-efficient}
 \end{figure}
 
-Da IoT-Geräte eine sehr hohe Diversität aufweisen, fokussiert sich der Ansatz zunächst nur darauf, mit einem Smartphone verschiedenste Sensoren in der erweiterten Umgebung zu finden. Dabei wird bewusst nur ein Ansatz zur Verbindung mit lokalen Services gewählt, da dieser Ansatz erst zu einem späteren Zeitpunkt auf die globale Ebene ausgeweitet werden soll. Bei der Suche eines Smartphones nach einem Service, der bestimmte Sensordaten zur Verfügung stellt, wird bei der Anfrage eine Liste von Kriterien gesendet, die ein Service erfüllen soll.
+Da IoT-Geräte eine sehr hohe Diversität aufweisen, fokussiert sich der Ansatz zunächst nur darauf, mit einem Smartphone verschiedenste Sensoren in der erweiterten Umgebung zu finden. Dabei wird bewusst nur ein Ansatz zur Verbindung mit lokalen Services gewählt, da dieser Ansatz erst zu einem späteren Zeitpunkt auf die globale Ebene ausgeweitet werden soll. Bei der Suche eines Smartphones nach einem Service, der bestimmte Sensordaten zur Verfügung stellt, wird bei der Anfrage eine Liste von Kriterien gesendet, die ein Service erfüllen soll. (vgl. \cite{energy-efficient})
 
-Die Vermittlung der Anfrage an den passenden Service erfolgt durch eine dreischichtige Architektur. Kernpunkt der Architektur bilden sogenannte Cluster Heads, die Informationen über Services in ihrer direkten Nähe speichern. Diese Cluster Heads werden an zufälligen Punkten erstellt. Wenn ein Cluster Head ausfallen sollte, kann die Anfrage einfach von einem anderen bearbeitet werden, was zu einer erhöhten Verfügbarkeit gegenüber einem Ansatz über Gateways führt.
+Die Vermittlung der Anfrage an den passenden Service erfolgt durch eine dreischichtige Architektur. Kernpunkt der Architektur bilden sogenannte Cluster Heads, die Informationen über Services in ihrer direkten Nähe speichern. Diese Cluster Heads werden an zufälligen Punkten erstellt. Wenn ein Cluster Head ausfallen sollte, kann die Anfrage einfach von einem anderen bearbeitet werden, was zu einer erhöhten Verfügbarkeit gegenüber einem Ansatz über Gateways führt. (vgl. \cite{energy-efficient})
 
-Sofern ein Cluster Head eine Anfrage nicht zufriedenstellend an einen Service vermitteln kann, wird die Anfrage stattdessen an die oberste Schicht der Architektur weitergeleitet, den sogenannten Area Router. Der Area Router ist mit allen Cluster Heads eines abgegrenzten räumlichen Bereiches verbunden und speichert Informationen über die dort bekannten Services. Fall ein Cluster Head unter den Service in seiner direkten Umgebung keinen zu einer Anfrage passenden Service findet, kann der Area Router einspringen, da er wesentlich mehr Services kennt. Zusätzlich ist es möglich, das abgedeckte Gebiet zu erweitern, in dem mehrere Area Router zusammengeschaltet werden.
+Sofern ein Cluster Head eine Anfrage nicht zufriedenstellend an einen Service vermitteln kann, wird die Anfrage stattdessen an die oberste Schicht der Architektur weitergeleitet, den sogenannten Area Router. Der Area Router ist mit allen Cluster Heads eines abgegrenzten räumlichen Bereiches verbunden und speichert Informationen über die dort bekannten Services. Fall ein Cluster Head unter den Service in seiner direkten Umgebung keinen zu einer Anfrage passenden Service findet, kann der Area Router einspringen, da er wesentlich mehr Services kennt. Zusätzlich ist es möglich, das abgedeckte Gebiet zu erweitern, in dem mehrere Area Router zusammengeschaltet werden. (vgl. \cite{energy-efficient})
 
-Dadurch, dass die Suche nach passenden Services erst in der unmittelbaren Umgebung erfolgt und nur ausgeweitet wird, falls keine Ergebnisse gefunden werden, wird Energie gespart. Zusätzlich prüft der Mechanismus regelmäßig, ob und wie häufig Cluster Heads angesprochen werden. Wird bei dieser Prüfung festgestellt, dass ein Cluster Head nur sehr selten Anfragen bekommt und aktiv werden muss, so wird er in den Sleep-Modus versetzt, wodurch zusätzlich die Energieeffizienz gesteigert wird.
+Dadurch, dass die Suche nach passenden Services erst in der unmittelbaren Umgebung erfolgt und nur ausgeweitet wird, falls keine Ergebnisse gefunden werden, wird Energie gespart. Zusätzlich prüft der Mechanismus regelmäßig, ob und wie häufig Cluster Heads angesprochen werden. Wird bei dieser Prüfung festgestellt, dass ein Cluster Head nur sehr selten Anfragen bekommt und aktiv werden muss, so wird er in den Sleep-Modus versetzt, wodurch zusätzlich die Energieeffizienz gesteigert wird. (vgl. \cite{energy-efficient})
 
 \subsection{UDDI}
 
-Universal Description, Discovery and Integration (UDDI) ist ein standardisierter Verzeichnisdienst, mit dessen Hilfe Anfragen zwischen Clients und Webservices vermittelt werden sollen. Entwickelt und vorangetrieben wurde UDDI als gemeinsames Projekt von IBM, Microsoft und SAP. Ende 2005 schalteten diese Firmen jedoch ihre UDDI-Technologien ab.
-Laut [Quelle] war UDDI in der Version 1.0 nicht zuverlässig, da die Spezifikation in vielen Punkten zu ungenau formuliert war, um als Industriestandard zu genügen. Wohl auch deshalb fand UDDI anfangs eine wesentlich geringere Akzeptanz als erwartet. Mit der Version 2.0 wurde die Spezifikation im Mai 2003 an vielen Punkten verbessert, so dass diese Version als erste zuverlässige Version angesehen wird.
+Universal Description, Discovery and Integration (UDDI) ist ein standardisierter Verzeichnisdienst, mit dessen Hilfe Anfragen zwischen Clients und Webservices vermittelt werden sollen. Entwickelt und vorangetrieben wurde UDDI als gemeinsames Projekt von IBM, Microsoft und SAP. Ende 2005 schalteten diese Firmen jedoch ihre UDDI-Technologien ab. (vgl. \cite{UDDI-Variability})
+
+Laut \cite{UDDI-Variability} war UDDI in der Version 1.0 nicht zuverlässig, da die Spezifikation in vielen Punkten zu ungenau formuliert war, um als Industriestandard zu genügen. Wohl auch deshalb fand UDDI anfangs eine wesentlich geringere Akzeptanz als erwartet. Mit der Version 2.0 wurde die Spezifikation im Mai 2003 an vielen Punkten verbessert, so dass diese Version als erste zuverlässige Version angesehen wird.
 
 Der Prozess der UDDI-Technologie besteht aus drei Schritten:
 \begin{itemize}
@@ -498,20 +499,13 @@ Der Prozess der UDDI-Technologie besteht aus drei Schritten:
 \item[3.] Verbindung eines Clients zu dem in der UDDI-Registry gefundenen Service
 \end{itemize}
 
-\begin{figure}
-\centering
-\includegraphics[scale=0.45]{UDDI.png}
-\caption{UDDI Übersicht}
-\label{UDDIBild}
-\end{figure}
-
 Konkrete Implementationen von UDDI können entweder global oder lokal ausgelegt sein. Das heißt, es ist einerseits möglich, mit einer UDDI-Implementation die registrierten Services über das Internet jedem beliebigen Client zur Verfügung zu stellen (global) oder andererseits, die Services nur innerhalb eines begrenzten Computernetzes anzubieten. Letzteres ist besonders für Unternehmen interessant, da Webservices in deren Kontext oftmals Geschäftslogik enthalten.
 
-Die Informationen über einen an einem UDDI-Dienst registrierte Service werden in drei Kategorien unterteilt. Diese werden angelehnt an das Farbschema von Telefonbüchern als Weiße, Gelbe und Grüne Seiten bezeichnet. Die weißen Seiten beinhalten dabei Informationen über den Anbieter und sein Geschäftsfeld. Diese grundlegenden Informationen umfassen beispielsweise Kontaktinformationen wie Adresse, Telefonnummer und den Namen. Zudem wird dem Anbieter eine einzigartige ID zugeordnet, über die er identifiziert werden kann.
+Die Informationen über einen an einem UDDI-Dienst registrierte Service werden in drei Kategorien unterteilt. Diese werden angelehnt an das Farbschema von Telefonbüchern als Weiße, Gelbe und Grüne Seiten bezeichnet. Die weißen Seiten beinhalten dabei Informationen über den Anbieter und sein Geschäftsfeld. Diese grundlegenden Informationen umfassen beispielsweise Kontaktinformationen wie Adresse, Telefonnummer und den Namen. Zudem wird dem Anbieter eine einzigartige ID zugeordnet, über die er identifiziert werden kann. (vgl. \cite{UDDI-implementation})
 
-Die Gelben Seiten enthalten somit weitergehende Informationen über den Anbieter und beschreiben dabei seine technologischen Kompetenzen, damit eventuell an einem seiner Services interessierte Clients den Anbieter einschätzen können. Dies kann gleichzeitig dazu genutzt werden, um die registrierten Anbieter und Services nach bestimmten Geschäftsfeldern zu durchsuchen.
+Die Gelben Seiten enthalten somit weitergehende Informationen über den Anbieter und beschreiben dabei seine technologischen Kompetenzen, damit eventuell an einem seiner Services interessierte Clients den Anbieter einschätzen können. Dies kann gleichzeitig dazu genutzt werden, um die registrierten Anbieter und Services nach bestimmten Geschäftsfeldern zu durchsuchen. (vgl. \cite{UDDI-implementation})
 
-Als letztes enthalten die Grünen Seiten die eigentlichen technischen Informationen zu einem Service. Diese technischen Informationen umfassen zum einen die vorhandenen Schnittstellen und URL-Adressen, sowie auch die Discovery-Informationen, die benötigt werden um die Verbindung zu einem Service herzustellen.
+Als letztes enthalten die Grünen Seiten die eigentlichen technischen Informationen zu einem Service. Diese technischen Informationen umfassen zum einen die vorhandenen Schnittstellen und URL-Adressen, sowie auch die Discovery-Informationen, die benötigt werden um die Verbindung zu einem Service herzustellen. (vgl. \cite{UDDI-implementation})
 
 \section{Bewertung}
 
@@ -564,6 +558,10 @@ ESB und EEP können zwar auf Cloud-Hardware betrieben werden, sind jedoch nicht 
 UDDI ist ein Standard, dessen Robustheit auf der jeweils verwendeten Implementierung basiert. Die Robustheit des Systems muss beim Systementwurf berücksichtigt werden, der Standard gibt jedoch selbst keine Angaben zu Ausfallsicherheit oder zu ergreifenden Maßnahmen.
 
 \section{Ausblick}
+
+Das Thema der Service-Discovery im Internet der Dinge wird in den nächsten Jahren an Brisanz gewinnen. Vorsichtige Prognosen gehen davon aus, dass bis 2020 knapp 20 Milliarden Geräte mit dem Internet verbunden sind [Quelle 1], während andere Schätzungen gar von 200 Milliarden ausgehen [Quelle 2]. In jedem Fall steigt die Anzahl der teilnehmenden Geräte massiv, wodurch die automatische Vermittlung zwischen verschiedenen serviceorientierten Komponenten auch weiterhin ein wichtiges Thema bleibt.
+
+Einen der wichtigsten Punkte für zukünftige Arbeiten stellt die Erarbeitung eines allgemein verwendbaren Frameworks für die Service Discovery dar. Die bislang vorgestellten Ansätze sind zumeist auf bestimmte Komponenten zugeschnitten, beispielsweise wissenschaftliche Sensoren. Wegen der hohen Diversität der unterschiedlichen Geräte sollte deshalb als nächster Schritt ein Framework für die allgemein Integration unterschiedlicher Komponenten konzipiert werden.
 
 
 
